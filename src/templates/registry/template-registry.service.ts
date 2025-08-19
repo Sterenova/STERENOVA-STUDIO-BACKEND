@@ -1,76 +1,72 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { Template, TemplateRegistry } from '../interfaces/template.interface';
 
-// Import all modular templates
-import { HeroPostTemplate } from '../modular/hero-post.template';
-import { HeroWhitePostTemplate } from '../modular/posts/hero-white-post.template';
-import { HeroGradientPostTemplate } from '../modular/posts/hero-gradient-post.template';
-import { PromoPackPostTemplate } from '../modular/posts/promo-pack-post.template';
-import { BigDiscountPostTemplate } from '../modular/posts/big-discount-post.template';
-import { Catalog2x2PostTemplate } from '../modular/posts/catalog-2x2-post.template';
-import { Catalog3x3PostTemplate } from '../modular/posts/catalog-3x3-post.template';
-import { BeforeAfterVerticalPostTemplate } from '../modular/posts/before-after-vertical-post.template';
-import { BeforeAfterHorizontalPostTemplate } from '../modular/posts/before-after-horizontal-post.template';
-import { TestimonialStatsPostTemplate } from '../modular/posts/missing-templates';
-import { LineupPostTemplate } from '../modular/posts/missing-templates';
-import { QuoteGradientPostTemplate } from '../modular/posts/missing-templates';
-import { AgendaMonthPostTemplate } from '../modular/posts/missing-templates';
-import { TipsSlidePostTemplate } from '../modular/posts/missing-templates';
-import { NewArrivalPostTemplate } from '../modular/posts/missing-templates';
-import { CollageThreePostTemplate } from '../modular/posts/missing-templates';
-import { StaffIntroPostTemplate } from '../modular/posts/missing-templates';
-import { FaqPostTemplate } from '../modular/posts/missing-templates';
-import { EventTeaserPostTemplate } from '../modular/posts/missing-templates';
-
-import { HeroGradientStoryTemplate } from '../modular/stories/hero-gradient-story.template';
-import { CountdownStoryTemplate } from '../modular/stories/countdown-story.template';
-import { PricelistStoryTemplate } from '../modular/stories/pricelist-story.template';
-import { AgendaStoryTemplate } from '../modular/stories/agenda-story.template';
-import { PollStoryTemplate } from '../modular/stories/poll-story.template';
-
 @Injectable()
 export class TemplateRegistryService implements OnModuleInit {
   private registry: TemplateRegistry = {};
 
   onModuleInit() {
+    console.log('TemplateRegistryService: onModuleInit called');
     this.registerModularTemplates();
   }
 
   private registerModularTemplates() {
-    // Register all modular templates
-    const templates: Template[] = [
-      // Posts
-      new HeroPostTemplate(),
-      new HeroWhitePostTemplate(),
-      new HeroGradientPostTemplate(),
-      new PromoPackPostTemplate(),
-      new BigDiscountPostTemplate(),
-      new Catalog2x2PostTemplate(),
-      new Catalog3x3PostTemplate(),
-      new BeforeAfterVerticalPostTemplate(),
-      new BeforeAfterHorizontalPostTemplate(),
-      new TestimonialStatsPostTemplate(),
-      new LineupPostTemplate(),
-      new QuoteGradientPostTemplate(),
-      new AgendaMonthPostTemplate(),
-      new TipsSlidePostTemplate(),
-      new NewArrivalPostTemplate(),
-      new CollageThreePostTemplate(),
-      new StaffIntroPostTemplate(),
-      new FaqPostTemplate(),
-      new EventTeaserPostTemplate(),
+    console.log('TemplateRegistryService: Starting template registration...');
+    
+    try {
+      // Import manuel de tous les templates de posts
+      console.log('TemplateRegistryService: Importing post templates...');
+      const { EventHeroPostTemplate } = require('../modular/posts/event-hero-post.template');
+      const { EquipmentShowcasePostTemplate } = require('../modular/posts/equipment-showcase-post.template');
+      const { EventPackagePostTemplate } = require('../modular/posts/event-package-post.template');
+      const { EventGalleryPostTemplate } = require('../modular/posts/event-gallery-post.template');
+      const { EquipmentCatalogPostTemplate } = require('../modular/posts/equipment-catalog-post.template');
+      const { EventCountdownPostTemplate } = require('../modular/posts/event-countdown-post.template');
+      const { EquipmentSpecsPostTemplate } = require('../modular/posts/equipment-specs-post.template');
+      const { EventTestimonialPostTemplate } = require('../modular/posts/event-testimonial-post.template');
       
-      // Stories
-      new HeroGradientStoryTemplate(),
-      new CountdownStoryTemplate(),
-      new PricelistStoryTemplate(),
-      new AgendaStoryTemplate(),
-      new PollStoryTemplate(),
-    ];
-
-    for (const template of templates) {
-      const key = `${template.metadata.category}/${template.metadata.name}`;
-      this.registry[key] = template;
+      // Import manuel de tous les templates de stories
+      console.log('TemplateRegistryService: Importing story templates...');
+      const { EventHeroStoryTemplate } = require('../modular/stories/event-hero-story.template');
+      const { EquipmentShowcaseStoryTemplate } = require('../modular/stories/equipment-showcase-story.template');
+      const { EventPackageStoryTemplate } = require('../modular/stories/event-package-story.template');
+      const { EventGalleryStoryTemplate } = require('../modular/stories/event-gallery-story.template');
+      const { EquipmentCatalogStoryTemplate } = require('../modular/stories/equipment-catalog-story.template');
+      
+      console.log('TemplateRegistryService: All imports successful');
+      
+      // Enregistrer tous les templates de posts
+      const postTemplates = [
+        new EventHeroPostTemplate(),
+        new EquipmentShowcasePostTemplate(),
+        new EventPackagePostTemplate(),
+        new EventGalleryPostTemplate(),
+        new EquipmentCatalogPostTemplate(),
+        new EventCountdownPostTemplate(),
+        new EquipmentSpecsPostTemplate(),
+        new EventTestimonialPostTemplate(),
+      ];
+      
+      // Enregistrer tous les templates de stories
+      const storyTemplates = [
+        new EventHeroStoryTemplate(),
+        new EquipmentShowcaseStoryTemplate(),
+        new EventPackageStoryTemplate(),
+        new EventGalleryStoryTemplate(),
+        new EquipmentCatalogStoryTemplate(),
+      ];
+      
+      // Enregistrer tous les templates
+      [...postTemplates, ...storyTemplates].forEach(template => {
+        const key = `${template.metadata.category}/${template.metadata.name}`;
+        this.registry[key] = template;
+        console.log(`TemplateRegistryService: Registered ${key}`);
+      });
+      
+      console.log(`TemplateRegistryService: Total templates registered: ${Object.keys(this.registry).length}`);
+      
+    } catch (error) {
+      console.error('TemplateRegistryService: Error during template registration:', error);
     }
   }
 
@@ -93,6 +89,7 @@ export class TemplateRegistryService implements OnModuleInit {
   }
 
   getAllMetadata() {
+    console.log('TemplateRegistryService: getAllMetadata called, registry keys:', Object.keys(this.registry));
     return Object.entries(this.registry).map(([key, template]) => ({
       key,
       ...template.metadata,

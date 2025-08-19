@@ -1,11 +1,9 @@
-// Export all post templates
-export { HeroWhitePostTemplate } from './hero-white-post.template';
-export { HeroGradientPostTemplate } from './hero-gradient-post.template';
-export { PromoPackPostTemplate } from './promo-pack-post.template';
-export { BigDiscountPostTemplate } from './big-discount-post.template';
-export { Catalog2x2PostTemplate } from './catalog-2x2-post.template';
-export { Catalog3x3PostTemplate } from './catalog-3x3-post.template';
-export { BeforeAfterVerticalPostTemplate } from './before-after-vertical-post.template';
-
-// Import all remaining templates
-export * from './missing-templates'; 
+// Export all post templates for event management and equipment rental
+export { EventHeroPostTemplate } from './event-hero-post.template';
+export { EquipmentShowcasePostTemplate } from './equipment-showcase-post.template';
+export { EventPackagePostTemplate } from './event-package-post.template';
+export { EventGalleryPostTemplate } from './event-gallery-post.template';
+export { EquipmentCatalogPostTemplate } from './equipment-catalog-post.template';
+export { EventCountdownPostTemplate } from './event-countdown-post.template';
+export { EquipmentSpecsPostTemplate } from './equipment-specs-post.template';
+export { EventTestimonialPostTemplate } from './event-testimonial-post.template'; 
