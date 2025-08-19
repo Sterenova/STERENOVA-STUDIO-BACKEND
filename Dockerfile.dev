@@ -6,26 +6,13 @@ ENV NODE_ENV=development
 ENV CHOKIDAR_USEPOLLING=1
 ENV WATCHPACK_POLLING=true
 
-# Build Python deps in separate stage
-FROM python:3.11-alpine AS pydeps
-RUN apk add --no-cache build-base ffmpeg
-WORKDIR /opt
-RUN python -m venv /opt/venv
-ENV PATH="/opt/venv/bin:$PATH"
-COPY motion/requirements.txt /tmp/requirements.txt
-RUN pip install --upgrade pip && pip install --no-cache-dir -r /tmp/requirements.txt
-
 # Dev runtime
 FROM node:20-alpine
 WORKDIR /app
 ENV NODE_ENV=development
 ENV CHOKIDAR_USEPOLLING=1
 ENV WATCHPACK_POLLING=true
-RUN apk add --no-cache python3 ffmpeg
-COPY --from=pydeps /opt/venv /opt/venv
-ENV PATH="/opt/venv/bin:$PATH"
 COPY package*.json ./
 RUN npm install
-COPY motion ./motion
 EXPOSE 3000
 CMD ["npm", "run", "start:dev"] 

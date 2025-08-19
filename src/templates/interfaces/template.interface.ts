@@ -27,4 +27,4 @@ export interface Template {
 
 export interface TemplateRegistry {
   [key: string]: Template;
-} 
+}
