@@ -1,9 +1,11 @@
+import { APP_TEMPLATES } from '../config/app';
+
 export const POST_PRESETS: Record<string, Record<string, string>> = {
 	'01_post_hero_white.svg': {
 		TITLE: 'SOIRÉE PRIVÉE',
 		SUBTITLE: 'Lumière • Son • Scène',
 		CTA: 'Plus d\'infos en bio',
-		HANDLE: '@sterenova_',
+		HANDLE: APP_TEMPLATES.defaultHandles.instagram,
 	},
 	'02_post_hero_gradient.svg': {
 		TITLE: 'ÉLÉGANCE & SON',
@@ -62,7 +64,7 @@ export const POST_PRESETS: Record<string, Record<string, string>> = {
 	},
 	'11_post_quote_gradient.svg': {
 		QUOTE: '“La lumière crée l’ambiance.”',
-		AUTHOR: '— Équipe Sterenova',
+		AUTHOR: APP_TEMPLATES.defaultTeam,
 	},
 	'12_post_agenda_month.svg': {
 		TITLE: 'AGENDA SEPTEMBRE',
@@ -110,7 +112,7 @@ export const STORY_PRESETS: Record<string, Record<string, string>> = {
 		SUBTITLE: 'Location premium • devis rapide',
 		PHOTO_LABEL: 'Photo plein écran',
 		CTA: 'RÉSERVEZ VOTRE DATE',
-		HANDLE: '@sterenova_',
+		HANDLE: APP_TEMPLATES.defaultHandles.instagram,
 	},
 	'02_story_countdown.svg': {
 		TITLE: 'J-7 AVANT LA SOIRÉE',
@@ -208,7 +210,7 @@ export const STORY_PRESETS: Record<string, Record<string, string>> = {
 	'20_story_hero_white.svg': {
 		TITLE: 'ÉLÉGANCE & SON (ALT)',
 		SUBTITLE: 'Location premium • devis rapide',
-		HANDLE: '@sterenova_',
+		HANDLE: APP_TEMPLATES.defaultHandles.instagram,
 		CTA: 'RÉSERVEZ VOTRE DATE',
 	},
 }; 

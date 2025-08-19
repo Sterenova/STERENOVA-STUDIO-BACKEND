@@ -98,7 +98,7 @@ const svg = template.generate({
   SUBTITLE: 'Lumière • Son • Scène',
   DATE: '15 DÉCEMBRE 2024',
   CTA: 'RÉSERVEZ VOTRE DATE',
-  HANDLE: '@sterenova_'
+  HANDLE: '@sterenova_studio_'
 });
 ```
 

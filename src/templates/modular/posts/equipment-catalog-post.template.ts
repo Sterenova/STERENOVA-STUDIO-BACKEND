@@ -56,8 +56,15 @@ export class EquipmentCatalogPostTemplate extends BaseTemplate {
   };
 
   protected generateSvg(data: Record<string, string>): string {
-    const { CATALOG_TITLE, CATEGORY_1, CATEGORY_2, CATEGORY_3, CATEGORY_4, HANDLE } = data;
-    
+    const {
+      CATALOG_TITLE,
+      CATEGORY_1,
+      CATEGORY_2,
+      CATEGORY_3,
+      CATEGORY_4,
+      HANDLE,
+    } = data;
+
     return `<?xml version="1.0" encoding="UTF-8"?>
 <svg width="1080" height="1080" viewBox="0 0 1080 1080" xmlns="http://www.w3.org/2000/svg">
   <defs>
@@ -78,36 +85,52 @@ export class EquipmentCatalogPostTemplate extends BaseTemplate {
   <text x="540" y="100" font-family="Arial, sans-serif" font-size="56" font-weight="bold" text-anchor="middle" fill="white">${CATALOG_TITLE}</text>
   
   <!-- Grid of categories -->
-  ${CATEGORY_1 ? `
+  ${
+    CATEGORY_1
+      ? `
   <rect x="90" y="180" width="400" height="180" fill="url(#cardGrad)" stroke="rgba(52,152,219,0.5)" stroke-width="3" rx="15"/>
   <text x="290" y="250" font-family="Arial, sans-serif" font-size="28" font-weight="600" text-anchor="middle" fill="white">${CATEGORY_1}</text>
   <rect x="120" y="270" width="340" height="70" fill="rgba(52,152,219,0.2)" rx="10"/>
   <text x="290" y="315" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="rgba(52,152,219,0.8)">Icône catégorie</text>
-  ` : ''}
+  `
+      : ''
+  }
   
-  ${CATEGORY_2 ? `
+  ${
+    CATEGORY_2
+      ? `
   <rect x="590" y="180" width="400" height="180" fill="url(#cardGrad)" stroke="rgba(155,89,182,0.5)" stroke-width="3" rx="15"/>
   <text x="790" y="250" font-family="Arial, sans-serif" font-size="28" font-weight="600" text-anchor="middle" fill="white">${CATEGORY_2}</text>
   <rect x="620" y="270" width="340" height="70" fill="rgba(155,89,182,0.2)" rx="10"/>
   <text x="790" y="315" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="rgba(155,89,182,0.8)">Icône catégorie</text>
-  ` : ''}
+  `
+      : ''
+  }
   
-  ${CATEGORY_3 ? `
+  ${
+    CATEGORY_3
+      ? `
   <rect x="90" y="400" width="400" height="180" fill="url(#cardGrad)" stroke="rgba(230,126,34,0.5)" stroke-width="3" rx="15"/>
   <text x="290" y="470" font-family="Arial, sans-serif" font-size="28" font-weight="600" text-anchor="middle" fill="white">${CATEGORY_3}</text>
   <rect x="120" y="490" width="340" height="70" fill="rgba(230,126,34,0.2)" rx="10"/>
   <text x="290" y="535" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="rgba(230,126,34,0.8)">Icône catégorie</text>
-  ` : ''}
+  `
+      : ''
+  }
   
-  ${CATEGORY_4 ? `
+  ${
+    CATEGORY_4
+      ? `
   <rect x="590" y="400" width="400" height="180" fill="url(#cardGrad)" stroke="rgba(46,204,113,0.5)" stroke-width="3" rx="15"/>
   <text x="790" y="470" font-family="Arial, sans-serif" font-size="28" font-weight="600" text-anchor="middle" fill="white">${CATEGORY_4}</text>
   <rect x="620" y="490" width="340" height="70" fill="rgba(46,204,113,0.2)" rx="10"/>
   <text x="790" y="535" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="rgba(46,204,113,0.8)">Icône catégorie</text>
-  ` : ''}
+  `
+      : ''
+  }
   
   <!-- Handle -->
   ${HANDLE ? `<text x="540" y="950" font-family="Arial, sans-serif" font-size="24" text-anchor="middle" fill="rgba(255,255,255,0.6)">${HANDLE}</text>` : ''}
 </svg>`;
   }
-} 
+}

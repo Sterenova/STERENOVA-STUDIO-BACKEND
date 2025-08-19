@@ -13,6 +13,7 @@ import { TemplatesService } from './templates.service';
 import type { Response } from 'express';
 import { tmpdir } from 'os';
 import { PALETTE, gradientCss } from './svg';
+import { APP_TEMPLATES } from '../config/app';
 import {
   ApiBody,
   ApiOkResponse,
@@ -233,7 +234,7 @@ export class TemplatesController {
     @Query('userId') userId?: string,
   ) {
     const out = await this.service.zipAll(dir || tmpdir(), userId);
-    res.download(out, 'sterenova_templates.zip');
+    res.download(out, APP_TEMPLATES.downloadFilename);
   }
 
   // New endpoints for user preferences and settings

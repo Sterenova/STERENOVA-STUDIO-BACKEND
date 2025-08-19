@@ -1,115 +1,139 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Sterenova Studio Backend
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+API NestJS pour la génération de templates SVG Sterenova Studio.
 
-## Env & Docker
+## 🚀 Démarrage rapide
 
-Create an `.env` at project root or use `.env.local` to override:
+### Développement local
 
+```bash
+# Installer les dépendances
+npm install
+
+# Démarrer en mode développement
+npm run start:dev
+
+# L'API sera disponible sur http://localhost:3000
+```
+
+### Build et production
+
+```bash
+# Build de production
+npm run build
+
+# Démarrer en mode production
+npm run start:prod
+```
+
+## 🔄 CI/CD et Docker Hub
+
+### Configuration requise
+
+Dans votre repo GitHub → Settings → Secrets and variables → Actions, ajoutez :
+
+```
+DOCKER_USERNAME=votre_username_docker_hub
+DOCKER_TOKEN=votre_access_token_docker_hub
+```
+
+### Workflow automatique
+
+- **Push sur main/develop** → Build et push automatique sur Docker Hub
+- **Tags** → Build et push avec version spécifique
+- **Images générées** : `sterenova/sterenova-backend:latest`
+
+### Créer une release
+
+```bash
+# Créer une nouvelle version
+./release.sh v1.0.0 "Description de la release"
+
+# La CI fera automatiquement :
+# 1. Build de l'image Docker
+# 2. Push sur Docker Hub avec le tag v1.0.0
+# 3. Coolify détectera et redéploiera
+```
+
+## 📦 Images Docker Hub
+
+### Tags disponibles
+- `latest` - Dernière version de la branche main
+- `v1.0.0` - Version spécifique
+- `main-<sha>` - Version de la branche main
+- `develop-<sha>` - Version de la branche develop
+
+### Utilisation avec Coolify
+
+Dans Coolify, configurez l'application avec :
+- **Image** : `sterenova/sterenova-backend:latest`
+- **Port** : 3000
+- **Variables d'environnement** : Voir `env.prod`
+
+## 🔧 Configuration
+
+### Variables d'environnement
+
+#### Développement (`env.local`)
 ```
 NODE_ENV=development
 PORT=3000
-GLOBAL_PREFIX=api
-CORS_ORIGIN=*
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=postgres
+DB_PASSWORD=postgres
+DB_NAME=app
 ```
 
-- Development with Docker:
-  - `docker compose -f ../docker-compose.dev.yml up --build`
-- Production image build:
-  - `docker build -t myapp-backend:prod -f Dockerfile .`
-  - `docker compose -f ../docker-compose.prod.yml up --build -d`
+#### Production (Coolify)
+```
+NODE_ENV=production
+PORT=3000
+DB_HOST=sterenova-postgres
+DB_PORT=5432
+DB_USER=postgres
+DB_PASSWORD=votre_mot_de_passe
+DB_NAME=sterenova
+```
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 📊 API Endpoints
 
-## Description
+- **Health Check** : `GET /api/health`
+- **Templates** : `GET /api/templates`
+- **Génération** : `POST /api/templates/:key/generate`
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## 🏗️ Architecture
 
-## Project setup
+- **Framework** : NestJS (Node.js)
+- **Base de données** : PostgreSQL avec TypeORM
+- **Validation** : Class-validator
+- **Documentation** : Swagger/OpenAPI
 
+## 🔍 Monitoring
+
+### Health Check
 ```bash
-$ npm install
+curl http://localhost:3000/api/health
+# Réponse: {"status":"ok"}
 ```
 
-## Compile and run the project
+### Logs
+- **Développement** : Console
+- **Production** : Coolify logs
 
+## 🚨 Dépannage
+
+### Problèmes courants
+1. **Port déjà utilisé** → Vérifiez qu'aucun autre service n'utilise le port 3000
+2. **Base de données** → Vérifiez la connexion PostgreSQL
+3. **Variables d'environnement** → Vérifiez le fichier `env.local`
+
+### Logs détaillés
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+# Mode debug
+DEBUG=* npm run start:dev
 ```
 
-## Run tests
+---
 
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
-
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
-
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+**🎯 Ce repo Sterenova Studio est configuré pour un déploiement automatique avec Coolify !**
